@@ -31,7 +31,7 @@
       #currentInfo {
         width: 270px;
         position: absolute;
-        left: 20px;
+        right: 20px;
         top: 63px;
 
         background-color: rgba(0, 0, 0, 0.2);
@@ -100,18 +100,26 @@
   </head>
   <body>
     <div id="container"></div>
-
+    <!--
+      <span class="bull">&bull;</span>
+    -->
     <div id="info">
-      <span class="bull">&bull;</span> Created by R. Siegbert Based on
-      <a href="https://github.com/dataarts/webgl-globe" target="_blank">WebGL Globe</a>
+      Created by R. Siegbert based on
+      <a href="https://github.com/dataarts/webgl-globe" target="_blank"
+        >WebGL Globe</a
+      >
+      using data from
+      <a href="https://www.ncdc.noaa.gov" target="_blank">GHCN</a>.
     </div>
 
     <div id="currentInfo">
       <span id="year2019" class="year">2019</span>
+      Compared to the <i>average</i> August in the span 1951-1980 the August
+      2019 was hotter in the <span style="color:red">red</span> regions and
+      cooler in the <span style="color:blue">blue</span> regions.
       <!--
-      <span id="year1990" class="year">1990</span>
-      <span id="year1995" class="year">1995</span>
-      <span id="year2000" class="year">2000</span>
+      <span id="year1990" class="year">1990</span> <span id="year1995"
+      class="year">1995</span> <span id="year2000" class="year">2000</span>
       -->
     </div>
 
@@ -119,8 +127,14 @@
       World Temperature Anomaly August 2019
     </div>
 
-    <script type="text/javascript" src="/globe/third-party/Detector.js"></script>
-    <script type="text/javascript" src="/globe/third-party/three.min.js"></script>
+    <script
+      type="text/javascript"
+      src="/globe/third-party/Detector.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/globe/third-party/three.min.js"
+    ></script>
     <script type="text/javascript" src="/globe/third-party/Tween.js"></script>
     <script type="text/javascript" src="/globe/globe.js"></script>
     <script type="text/javascript">
@@ -138,7 +152,7 @@
         var settime = function(globe, t) {
           return function() {
             new TWEEN.Tween(globe)
-              .to({ time: t / years.length }, 500)
+              .to({time: t / years.length}, 500)
               .easing(TWEEN.Easing.Cubic.EaseOut)
               .start();
             var y = document.getElementById('year' + years[t]);
@@ -162,7 +176,11 @@
         TWEEN.start();
 
         xhr = new XMLHttpRequest();
-        xhr.open('GET', '/ghcn_nasa_aug/ghcn_aug_2019_anomaly_1951_1980_base.json', true);
+        xhr.open(
+          'GET',
+          '/ghcn_nasa_aug/ghcn_aug_2019_anomaly_1951_1980_base.json',
+          true,
+        );
         xhr.onreadystatechange = function(e) {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
@@ -176,7 +194,7 @@
                     name: data[i][0],
                     animated: true,
                   },
-                  5 //scaling default value was 200 - that is size * scaling = magnitude
+                  25, //scaling default value was 200 - that is size * scaling = magnitude
                 );
               }
               globe.createPoints();
